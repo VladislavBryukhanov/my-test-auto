@@ -42,3 +42,7 @@ ESLint is used with pre-commit hooks. Run manually with:
 ```bash
 npm run lint
 ```
+
+## Demo Video Available
+> A demo video is available in the `docs/` folder.
+> [▶ Watch Demo](docs/demo.mp4)

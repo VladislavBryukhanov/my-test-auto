@@ -1,4 +1,4 @@
-import { GitHubContentFile } from "@types";
+import { GitHubContentFile } from '@types';
 
 export const serializeFileContent = (content: GitHubContentFile) => {
   const contentJSON = JSON.stringify(content, null, 2) + '\n';

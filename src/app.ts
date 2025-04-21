@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { checkNpmPackageVersionExists, getGithubActionsInstance } from '@services';
@@ -16,6 +16,11 @@ export const main = async () => {
     const file = await instance.readRepoFile(FILE_PATH);
 
     const parsedPackageJson = deserilizieFileContent(file.content);
+
+    if (!parsedPackageJson.dependencies[config.packageName]) {
+      throw new Error('No such package in the repo!');
+    }
+
     parsedPackageJson.dependencies[config.packageName] = config.packageVersion;
 
     await instance.createBranch();
@@ -29,7 +34,7 @@ export const main = async () => {
     await instance.createPullRequest();
 
     // TODO improve logging
-    console.log('Task has proceeded successfully')
+    console.log('Task has proceeded successfully');
   } catch (err: unknown) {
     // TODO improve error handling
     if (err instanceof Error) {
@@ -42,3 +47,4 @@ export const main = async () => {
 };
 
 main();
+

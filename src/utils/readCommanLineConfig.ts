@@ -17,7 +17,7 @@ export const readCommanLineConfig = (): RuntimeConfig => {;
     .parseSync();
 
   const githubToken = readline.question(
-    "Enter github access key: ",
+    'Enter github access key: ',
     { hideEchoBack: true },
   );
   

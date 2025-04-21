@@ -14,7 +14,7 @@ export const checkNpmPackageVersionExists = async (pkgName: string, version: str
       if (err.response && err.response.status === 404) {
         throw new Error(`Package "${pkgName}" not found on NPM`);
       } else {
-        console.log('err', err)
+        console.log('err', err);
         throw new Error('Error checking NPM package: ' + err.message);
       }
     }

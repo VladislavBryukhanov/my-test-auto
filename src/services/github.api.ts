@@ -1,5 +1,6 @@
 import { Octokit } from 'octokit';
 import { RuntimeConfig } from '@types';
+import { logAction } from 'utils/logger';
 
 export const getGithubActionsInstance = async ({
   githubToken,
@@ -12,13 +13,11 @@ export const getGithubActionsInstance = async ({
   const octokit = new Octokit({ auth: githubToken });
 
   const { COMPANY_NAME, FEATURE_BRANCH_PREFIX } = process.env;
-
+  const targetBranchName = `${FEATURE_BRANCH_PREFIX}-${packageName}-${packageVersion}`;
   const commonConfig = {
     owner: repoOwner,
     repo: repoName,
   };
-
-  const targetBranchName = `${FEATURE_BRANCH_PREFIX}-${packageName}-${packageVersion}`;
 
   const createBranch = async () => {
     const baseRef = await octokit.rest.git.getRef({
@@ -33,8 +32,7 @@ export const getGithubActionsInstance = async ({
       ref: `refs/heads/${targetBranchName}`,
       sha: latestCommitSha,
     });
-    // TODO improve logging
-    console.log('Github Branch has been created');
+    logAction('Github Branch', 'has been created');
   };
 
   const createPullRequest = async () => {
@@ -46,8 +44,7 @@ export const getGithubActionsInstance = async ({
       title: `Auto PR from ${COMPANY_NAME} - Upgrade ${packageName}-${packageVersion}`,
       body: `Auto generated PR to audit package version and upgrade ${packageName} to ${packageVersion} version`,
     });
-    // TODO improve logging
-    console.log('Github Pull Request has been created');
+    logAction('Github Pull Request', 'has been created');
   };
 
   const readRepoFile = async (path: string) => {
@@ -69,8 +66,7 @@ export const getGithubActionsInstance = async ({
       content,
       sha,
     });
-    // TODO improve logging
-    console.log('Github Commit has been created');
+    logAction('Github Commit', 'has been created');
   };
 
   return {

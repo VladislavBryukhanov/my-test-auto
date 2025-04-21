@@ -3,6 +3,7 @@ dotenv.config();
 
 import { checkNpmPackageVersionExists, getGithubActionsInstance } from '@services';
 import { readCommanLineConfig, deserilizieFileContent, serializeFileContent } from '@utils';
+import { logAction, logError } from 'utils/logger';
 
 const FILE_PATH = 'package.json';
 
@@ -33,18 +34,11 @@ export const main = async () => {
 
     await instance.createPullRequest();
 
-    // TODO improve logging
-    console.log('Task has proceeded successfully');
+    logAction('The App', 'has proceeded successfully');
   } catch (err: unknown) {
-    // TODO improve error handling
-    if (err instanceof Error) {
-      console.error('[Error]: ', err.message);
-    } else {
-      console.error('[Unknown error]', err);
-    }
+    logError(err);
     process.exit();
   }
 };
 
 main();
-

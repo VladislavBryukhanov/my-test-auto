@@ -45,4 +45,4 @@ npm run lint
 
 ## Demo Video Available
 > A demo video is available in the `docs/` folder.
-> [▶ Watch Demo](docs/demo.mp4)
+> [▶ Watch Demo](docs/demo.webm)
